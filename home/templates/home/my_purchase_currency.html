@@ -1,0 +1,109 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if purchases_currencies %}
+        <main role="main">
+            <div class="wrapper">
+                <div class="breadcrumb-wrap">
+                    <div class="container py-3">
+                        <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                            <div class="col-md-4">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                        <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                            Мои покупки / <a class="card-title mb-0" href="{% url 'home:my_purchase' %}" style="color: #319795;">Назад</a>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card mb-4">
+                                <div class="card-header border-bottom">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <h6 class="card-title mb-0">Мои покупки внуиигровых валют</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body bg-light border-bottom">
+                                    <div class="row align-items-center">
+                                        <div class="col-xs-12 col-md-6">
+                                            <span class="font-14 text-muted">История покупок внуиигровых валют</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body pt-3">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-top-0">Дата</th>
+                                                    <th class="border-top-0">Заказ</th>
+                                                    <th class="border-top-0">Игра</th>
+                                                    <th class="border-top-0">Валюта</th>
+                                                    <th class="border-top-0">Наличие</th>
+                                                    <th class="border-top-0">Продавец</th>
+                                                    <th class="border-top-0">Статус</th>
+                                                    <th class="border-top-0">Сумма</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for purchase_currency in purchases_currencies %}
+                                                    <tr>
+                                                        <td>{{ purchase_currency.published }}</td>
+                                                        <td>#{{ purchase_currency.id }}</td>
+                                                        <td>{{ purchase_currency.currency.game.name }}</td>
+                                                        <td>{{ purchase_currency.currency.name }}</td>
+                                                        <td>{{ purchase_currency.quantity }}</td>
+                                                        <td><a href="{% url 'users:user_account' purchase_currency.saleman.id %}"><span class="font-medium">{{ purchase_currency.saleman.username }}</span></a></td>
+                                                        <td>
+                                                            <span class="badge badge-soft-success text-cuccess">{{ purchase_currency.get_status_display }}</span>
+                                                        </td>
+                                                        <td><span class="font-medium">{{ purchase_currency.price_for_1_piece }}₽</span></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    {% else %}
+        <main role="main">
+            <div class="wrapper">
+                <div class="breadcrumb-wrap">
+                    <div class="container py-3">
+                        <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                            <div class="col-md-4">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                        <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                            Мои покупки / <a class="card-title mb-0" href="{% url 'home:my_purchase' %}" style="color: #319795;">Назад</a>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="no-purchase" style="text-align: center; margin: 100px 0 240px 0">
+            <hr>
+            <span>У вас нету покупок игровых валют</span>
+            <hr>
+        </div>
+    {% endif %}
+{% endblock %}

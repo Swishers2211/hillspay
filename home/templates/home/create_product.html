@@ -1,0 +1,106 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="wrapper">
+
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                        Добавление товара
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mb-5">
+                                    <div class="card-header border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <h6 class="card-title mb-0">Добавить товар</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form action="{% url 'home:create_product' category.id %}" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="{{ form.game.id_for_label }}"></label>{{ form.game }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="{{ form.category.id_for_label }}"></label>{{ form.category }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="{{ form.subcategory.id_for_label }}"></label>{{ form.subcategory }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="{{ form.platform.id_for_label }}"></label>{{ form.platform }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.short_description.id_for_label }}">Короткое описание</label>{{ form.short_description }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="{{ form.description.id_for_label }}">Подробное описание</label>{{ form.description }}
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="{{ form.price_for_1_piece.id_for_label }}">Цена ₽</label>{{ form.price_for_1_piece }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="{{ form.availability.id_for_label }}">Наличие</label>{{ form.availability }}
+                                                            <small>Указывайте такое колличество, которое у вас есть во исбежания проблем с пакупателями</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="form-actions my-4">
+                                                    <button type="submit" class="btn btn-primary width-150">
+                                                        Выставить на продажу
+                                                    </button>
+                                                    <a class="btn btn-danger" href="{% url 'home' %}">Отмена</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <h4 class="text-black mb-3">Изображение товара</h4>
+                                                <div class="add-item position-relative mb-3">
+                                                    <div class="add-item-img d-flex justify-content-center border border-radius py-6">
+                                                        <i class="las la-file"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.image.id_for_label }}">{{ form.image }}</label>
+                                                    <br />
+                                                    <small>Техническая информация для пользователя</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

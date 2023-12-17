@@ -1,0 +1,147 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="wrapper">
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                        Профиль
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <aside class="col-lg-3 pt-4 pt-lg-0">
+                        <div class="row">
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card mb-4">
+                                    <div class="card-body px-3 py-2">
+                                        <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                            <img src="{% if user.image %} {{ user.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" class="img-lg rounded-circle" alt="profile image">
+                                            <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                <h6 class="mb-0">{{ user }}</h6>
+                                                <p class="text-muted mb-1">{{ user.email }}</p>
+                                                <p class="mb-0 text-primary font-weight-bold small">Профиль продавца</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <ul class="nav flex-column dash-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="{% url 'users:profile' user.id %}">
+                                        <div><i class="las la-arrow-right"></i>Профиль</div>
+                                        <div class="d-flex  align-items-center">
+                                            <p class="mb-0 text-small text-success">
+                                                Profile Verified
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="{% url 'home:my_products_list' %}">
+                                        <div><i class="las la-file"></i>Мои товары</div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="{% url 'home:basket_list' %}">
+                                        <div><i class="las la-receipt"></i>Отложенное</div>
+                                        <div class="d-flex  align-items-center"><p class="mb-0 text-small text-success"></p></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="{% url 'users:settings_profile' user.id %}">
+                                        <div><i class="las la-cog"></i>Настройки</div>
+
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active d-flex justify-content-between align-items-center text-danger" aria-current="page" href="{% url 'users:logout' %}">
+                                        <div><i class="las la-sign-out-alt"></i>Выйти</div>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                    <div class="col-lg-9">
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Добро пожаловать! </strong> Вам следует проверить некоторые из этих полей ниже.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Баланс</h4>
+                                        <p class="text-small">Актуальный</p>
+                                        <div class="d-flex justify-content-between align-items-baseline">
+                                            <h2 class="text-dark font-weight-bold">{{ user.balance }}<span class="text-muted text-small">/ ₽</span></h2>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Отзывы</h4>
+                                        <p class="text-small">За все время</p>
+                                        <div class="d-flex justify-content-between align-items-baseline">
+                                            <h2 class="text-dark font-weight-bold">{{ reviews.count }}</h2>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Доход</h4>
+                                        <p class="text-small">С прошлого месяца</p>
+                                        <div class="d-flex justify-content-between align-items-baseline">
+                                            <h2 class="text-dark font-weight-bold">7,522<span class="text-muted text-small">/ за месяц</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <li style="list-style-type: none;">Отзывы</li>
+                        <br>
+                        {% for review in reviews %}
+	                        <article class="card card-product-list">
+	                            <div class="row no-gutters">
+	                                </aside>
+	                                <div class="col-lg-5 col-sm-12">
+	                                    <div class="info-main p-4"> <a href="" class="">  </a>
+	                                    	<li style="list-style-type: none;"></i>{{ review.published }}, {{ review.user }}, {{ review.game.name }}, {{ review.price_for_1_piece }}₽</li>
+	                                        <li style="list-style-type: none;">{{ review.comment }}</li>
+	                                        <li style="list-style-type: none;">Ответ продаца: <p>{{ review.saleman_comment }}<p></li>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </article>
+	                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

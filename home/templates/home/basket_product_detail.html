@@ -1,0 +1,93 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<main role="main">
+        <div class="wrapper">
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                        {{ basket.product.short_description }}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7 col-lg-9">
+                            <div class="product-info">
+                                <div class="swiper-container rounded border">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="{% if basket.product.image %} {{ basket.product.image.url }} {% else %} {% static 'img/950x500.png' %} {% endif %}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-description-text pr-lg-2">
+                                <h2 class="mt-4 mb-4">
+                                    {{ basket.product.short_description }}
+                                </h2>
+                                <p class="lead">
+                                    {{ basket.product.description }}
+                                </p>
+                            </div>
+                        </div>
+                        <!-- edn: Col 9 -->
+                        <div class="col-md-5 col-lg-3">
+                            <div class="sidebar sticky-lg-top sticky-md-top">
+                                <div class="sidebar-widget">
+                                    <h3 class="mb-4">{{ basket.product.name }}</h3>
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-md-4">
+                                            <div class="form-group text-md-right text-sm-center">
+                                                <h2 class="item-widget-price">{{ basket.product.price_for_1_piece }}₽</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" type="button">
+                                        Купить
+                                    </button>
+                                </div>
+
+                                <div class="sidebar-widget">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <span class="sidebar-widget-title--sm">Дополнительная информация</span>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <i class="las la-check mr-2 text-success"></i>Платформа - {{ basket.product.platform.name }}
+                                                </li>
+                                                <li>
+                                                    <i class="las la-check mr-2 text-success"></i>Тип товара - {{ basket.product.subcategory.name }}
+                                                </li>
+                                                <li>
+                                                    <i class="las la-check mr-2 text-success"></i>Наличие - {{ basket.product.availability }} шт
+                                                </li>
+                                                <li>
+                                                    <i class="las la-check mr-2 text-success"></i><a href="">{{ basket.product.user.username }}</a>
+                                                </li>
+                                                <li>
+                                                    <i class="las la-check mr-2 text-success"></i>{{ basket.product.published }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}

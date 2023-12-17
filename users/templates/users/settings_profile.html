@@ -1,0 +1,98 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="wrapper">
+
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="#">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                        Настройки
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card mb-4">
+                                    <div class="card-header border-bottom">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <h6 class="card-title mb-0">Настройки профиля</h6>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-3">
+                                        <form action="{% url 'users:settings_profile' user.id %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="{{ form.username.id_for_label }}"></label>{{ form.username }}
+                                                    <i class="fa fa-user iconalign"></i>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="{{ form.email.id_for_label }}"></label>{{ form.email }}
+                                                    <i class="fa fa-envelope iconalign"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 form-group">
+                                                    <label for="form.gender.id_for_label" style="padding-left:10px !important"></label>{{ form.gender }}
+                                                    <i class="fa fa-user iconalign"></i>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-control" style="margin-top:24px">Регистрация {{ user.published }}</label>
+                                                    <i class="fa fa-envelope iconalign"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6 form-group">
+                                                    <label for="form.country.id_for_label" style="padding-left:10px !important"></label>{{ form.country }}
+                                                    <i class="fa fa-user iconalign"></i>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="{{ form.image.id_for_label }}"></label>{{ form.image }}
+                                                    <i class="fa fa-envelope iconalign"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Пароль">
+                                                    <i class="fa fa-lock iconalign"></i> </div>
+                                                <div class="form-group col-md-6">
+                                                    <input type="text" class="form-control" placeholder="Повторите пароль">
+                                                    <i class="fa fa-lock iconalign"></i> </div>
+                                            </div>
+                                            <div class="custom-control custom-checkbox mb-3">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">Я согласен с условиями.</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" type="submit">Применить</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

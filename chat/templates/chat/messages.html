@@ -1,0 +1,58 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+{% block content %}
+	<div id="page-contents">
+		<div class="container">
+			<div class="row">
+				<div class="chat-room">
+					<div  class="row">
+						<div class="col-md-7">
+							<div class="tab-content scrollbar-wrapper wrapper scrollbar-outer">
+								<div class="tab-pane active" id="contact-1">
+									<div class="chat-body">
+										<ul class="chat-message" id="chat-log">
+											{% for message in sort_messages %}
+												{% if message.sender == request.user %}
+													<li class="right">
+														<div class="chat-item">
+															<div class="chat-item-header">
+																<h5>{{ message.sender.username }}</h5>
+																<small class="text-muted">{{ message.message_time }}</small>
+															</div>
+															<p>{{ message.message_text }}</p>
+														</div>
+													</li>
+												{% else %}
+													<li class="left">
+														<a href="#"><img src="{% if message.sender.image %} {{ message.sender.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" alt="" class="profile-photo-sm pull-left" /></a>
+														<div class="chat-item">
+															<div class="chat-item-header">
+																<h5>{{ message.sender.username }}</h5>
+																<small class="text-muted">{{ message.message_time }}</small>
+															</div>
+															<p>{{ message.message_text }}</p>
+														</div>
+													</li>
+												{% endif %}
+											{% endfor %}
+										</ul>
+									</div>
+								</div>
+		</div>
+		<div class="send-message">
+			<form method="post" action="" enctype="multipart/form-data" autocomplete="off" id="message_form">
+				{% csrf_token %}
+				<div class="input-group">
+					<input id="chat-message-input" type="text" class="form-control" placeholder="Написать сообщение">
+					<span class="input-group-btn">
+						<button id="chat-message-submit" class="btn btn-default" type="button">Отправить</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</div>
+	{{ username|json_script:"room-name" }}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

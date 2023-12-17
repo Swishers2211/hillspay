@@ -1,0 +1,66 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+	<main role="main">
+        <div class="warpper">
+            <div class="container">
+                <div class="intro-2 poition-relative">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-md-8">
+                            <h1 class="intro-title">
+                                Биржа цифровых товаров
+                            </h1>
+                            <p class="lead">
+                                Купите или выстаьте свой уникальный товар <br/>
+                                и станьте самым успешным в этом деле
+                            </p>
+                            <div class="row">
+                                <div class="col-md-7">
+                                	<form action="{% url 'home:search_game' %}" method="get">
+                                        <div class="input-group mb-3">
+                                            <input type="text" placeholder="Поиск по играм..." class="form-control border-0 bg-white" name="search">
+                                            <span class="input-group-append"> <button class="btn btn-primary"> <i class="las la-search"></i></button></span>
+                                        </div>
+                                    </form>
+								</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-none d-sm-block">
+                            <img class="card-img-top opacity-8" src="{% static 'img/Лобос_УПНФМ_(лого).png' %}" alt="image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row mb-4 mt-5 d-flex justify-content-between align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="mb-0">Новые игры</h5>
+                    </div>
+                </div>
+                <div class="row">
+                	{% for game in games %}
+	                    <div class="col-md-3">
+	                        <div class="card item-card h-100 border-0">
+	                            <div class="item-card__image rounded">
+	                                <a class="swap-link" href="{% url 'home:detail_game' game.id %}">
+	                                    <img src="{% if game.image %} {{ game.image.url }} {% else %} {% static 'img/520x400.png' %} {% endif %}" class="img-fluid rounded" alt="">
+	                                </a>
+	                            </div>
+	                            <div class="card-body px-0 pt-3">
+	                                <div class="d-flex justify-content-between align-items-start">
+	                                    <div class="item-title">
+	                                        <a href="{% url 'home:detail_game' game.id %}">
+	                                            <h3 class="h5 mb-0 text-truncate">{{ game.name }}</h3>
+	                                        </a>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                {% endfor %}
+                </div>
+        	</div>
+        </div>
+    </main>
+{% endblock %}

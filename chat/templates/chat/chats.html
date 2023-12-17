@@ -1,0 +1,73 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+{% block content %}
+    <div id="page-contents">
+    	<div class="container">
+    		<div class="row">
+            <div class="chat-room">
+              <div class="row">
+                <div class="col-md-5">
+                  {% if not messages %}
+                    <div class="text-center">
+                      <h5 style="color: #319795;">У вас пока нет сообщений.</h5>
+                    </div>
+                  {% else %}
+                    <ul class="nav nav-tabs contact-list scrollbar-wrapper scrollbar-outer">
+                      {% for message in messages %}
+                        {% if message.sender == request.user %}
+                          <li class="active">
+                            <a href="{% url 'chat:dialog' message.receiver.username %}">
+                              <div class="contact">
+                                <img src="{% if message.receiver.image %} {{ message.receiver.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" alt="" class="profile-photo-sm pull-left" />
+                                <div class="msg-preview">
+                                  <h6>{{ message.receiver.username }}</h6>
+                                  <p class="text-muted">{{ message.message_text }}</p>
+                                  <small class="text-muted">{{ message.message_time }}</small>
+                                </div>
+                              </div>
+                            </a>
+                          </li>
+                        {% else %}
+                          {% if not message.is_readed %}
+                            <li class="active">
+                              <a id='user-id' href="{% url 'chat:dialog' message.sender.username %}">
+                                <div class="contact">
+                                  <img src="{% if message.receiver.image %} {{ message.receiver.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" alt="" class="profile-photo-sm pull-left" />
+                                  <div class="msg-preview">
+                                    <h6>{{ message.sender.username }}</h6>
+                                    <p class="text-muted">{{ message.message_text }}</p>
+                                    <small class="text-muted">{{ message.message_time }}</small>
+                                    <div class="chat-alert">1</div>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+                          {% else %}
+                            <li class="active">
+                              <a href="{% url 'chat:dialog' message.sender.username %}">
+                                <div class="contact">
+                                  <img src="{% if message.sender.image %} {{ message.sender.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" alt="" class="profile-photo-sm pull-left" />
+                                  <div class="msg-preview">
+                                    <h6>{{ message.sender.username }}</h6>
+                                    <p class="text-muted">{{ message.message_text }}</p>
+                                    <small class="text-muted">{{ message.message_time }}</small>
+                                  </div>
+                                </div>
+                              </a>
+                            </li>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+    		</div>
+    	</div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

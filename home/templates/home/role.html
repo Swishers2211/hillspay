@@ -1,0 +1,34 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+	{% if not roles %}
+		<div class="no-role" style="text-align: center; margin: 185px 0 185px 0">
+            <hr>
+            	<span>Правила еще не добавлены</span>
+            <hr>
+        </div>
+	{% else %}
+		<div class="container">
+			<hr>
+				<strong><h3>Правила</h3></strong>
+			<hr>
+			{% for role in roles %}
+				<strong><h5>{{ role.sub_role }}</h5></strong>
+
+				<hr>
+				<div class='navbar navbar-expand-lg navbar-dark px-lg-0'>
+					<strong><p>Нарушение</p></strong>
+					<div>
+						<p>{{ role.violation }}</p>
+					</div>
+					<strong><p>Наказание</p></strong>
+					<div>
+						<p>{{ role.punishment }}</p>
+					</div>
+				</div>
+				<hr>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if my_products_lists %}
+        <main role="main">
+            <div class="wrapper">
+                <div class="breadcrumb-wrap">
+                    <div class="container py-3">
+                        <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                            <div class="col-md-4">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb mb-0">
+                                        <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                        <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                            Мои товары
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="row">
+                                <div class="col">
+                                    <!-- my items table -->
+                                    <div class="card product_item_list mb-4">
+                                        <div class="card-header py-3 border-bottom">
+                                            <div class="d-flex align-items-center">
+                                                <div>
+                                                    <h6 class="card-title mb-0">Опубликованные товары</h6>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-4">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover m-b-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-0">Фото товара</th>
+                                                                <th class="border-0">Описание</th>
+                                                                <th class="border-0">Категория</th>
+                                                                <th class="border-0" data-breakpoints="sm xs">Отзывы</th>
+                                                                <th class="border-0" data-breakpoints="xs">Цена</th>
+
+                                                                <th class="border-0" data-breakpoints="sm xs md">Действие</th>
+                                                            </tr>
+                                                        </thead>
+                                                        {% for my_products_list in my_products_lists %}
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><img src="{% if my_products_list.image %} {{ my_products_list.image.url }} {% else %} {% static 'img/100x100.png' %} {% endif %}" class="img-lg rounded" alt="Product img"></td>
+                                                                <td>
+                                                                    <h6>{{ my_products_list.short_description }}</h6>
+                                                                </td>
+                                                                <td>
+                                                                    <h6>{{ my_products_list.category }}</h6>
+                                                                </td>
+                                                                <td>
+
+                                                                    <span class="text-muted">6 ratings</span>
+                                                                    <div class="d-flex mb-4">
+                                                                        <i class="icon_star_alt text-warning ml-0"></i>
+                                                                        <i class="las la-star text-success mr-1"></i>
+                                                                        <i class="las la-star text-success mr-1"></i>
+                                                                        <i class="las la-star text-success mr-1"></i>
+                                                                        <i class="las la-star text-success mr-1"></i>
+                                                                    </div>
+                                                                </td>
+                                                                <td>{{ my_products_list.price_for_1_piece }}₽</td>
+
+                                                                <td>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <!-- <button type="button" class="btn btn-sm btn-primary"><i class="las la-edit"></i></button> -->
+                                                                        <a class="btn btn-sm btn-danger" href="{% url 'home:my_product_remove' my_products_list.id %}"><i class="las la-trash-alt"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    {% else %}
+        <div class="no-products-list" style="text-align: center; margin: 240px 0 240px 0">
+            <hr>
+                <span>Вы не опубликовали ни одного товара</span>
+            <hr>
+        </div>
+    {% endif %}
+{% endblock %}

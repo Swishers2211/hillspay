@@ -1,0 +1,136 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="wrapper">
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                    {{ subcategory.category.game.name }} / {{ subcategory.category.name }} / {{ subcategory.name }}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 col-lg-3">
+                        <div class="sidebar-widget">
+                            <div class="row">
+                                <div class="col-12">
+                                    <span class="sidebar-widget-title--sm">Описание товара</span>
+                                    <form action="{% url 'home:search_product_in_subcategory' subcategory.id %}" method="get">
+                                        <div class="input-group mb-4">
+                                            <input type="text" placeholder="Поиск по описанию..." class="form-control" name="search">
+                                            <span class="input-group-append"> <button class="btn btn-primary"> <i class="las la-search"></i></button></span>
+                                        </div>
+                                    </form>
+                                    <hr>
+                                        <span class="sidebar-widget-title--sm">Категория</span>
+                                        {% for category in categories %}
+                                            <div class=" custom-checkbox mb-2">
+                                                <a class="label w-100" for="customCheck10" href="{% url 'home:detail_category_products' category.id %}">{{ category.name }}</a><span class="badge badge-light float-right"></span>
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    <hr>
+                                        <span class="sidebar-widget-title--sm">Тип товара</span>
+                                        <div class=" custom-checkbox mb-2">
+                                            <a class="label w-100" for="customCheck10" href="{% url 'home:detail_category_products' subcategory.category.id %}">Все</a><span class="badge badge-light float-right"></span>
+                                            </label>
+                                        </div>
+                                        {% for subcategory in subcategories %}
+                                            <div class=" custom-checkbox mb-2">
+                                                <a class="label w-100" for="customCheck10" href="{% url 'home:detail_subcategory' subcategory.id %}">{{ subcategory.name }}</a><span class="badge badge-light float-right"></span>
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    <hr>
+                                        <span class="sidebar-widget-title--sm">Платформа</span>
+                                        {% for platform in platforms %}
+                                            <div class=" custom-checkbox mb-2">
+                                                <a class="label w-100" for="customCheck10" href="{% url 'home:detail_platform' platform.id %}">{{ platform.name }}</a><span class="badge badge-light float-right"></span>
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    <hr> <span class="sidebar-widget-title--sm">Ценовой диопозон</span>
+                                    <div class="price-range d-flex justify-content-between align-items-center">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">₽</div>
+                                            </div>
+                                            <input type="text" id="price-min-input" name="price-min" data-toggle="dropdown" class="form-control rounded-right" placeholder="Min" value="">
+                                            <ul id="price-min" class="dropdown-menu">
+                                                <li><a href="#" data-value="5" data-toggle="dropdown">Мин цена</a></li>
+                                                <li><a href="#" data-value="10" data-toggle="dropdown">10</a></li>
+                                                <li><a href="#" data-value="50" data-toggle="dropdown">50</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="mx-1">
+                                            <p class="mt-3"> - </p>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">₽</div>
+                                            </div>
+                                            <input type="text" id="price-max-input" name="price-max" data-toggle="dropdown" class="form-control rounded-right" placeholder="Max" value="">
+                                            <ul id="price-max" class="dropdown-menu">
+                                                <li><a href="#" data-value="500" data-toggle="dropdown">Макс цена</a></li>
+                                                <li><a href="#" data-value="50" data-toggle="dropdown">50</a></li>
+                                                <li><a href="#" data-value="100" data-toggle="dropdown">100</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="ml-1">
+                                            <button class="btn btn-primary px-2" type="button"><i class="las la-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-lg-9">
+                        {% for product in products %}
+                            <article class="card card-product-list">
+                                <div class="row no-gutters">
+                                    <aside class="col-sm-12 col-lg-4">
+                                        <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/520x400.png' %} {% endif %}" class="bg-image" alt="">
+                                        <a href="{% url 'home:detail_product' product.id %}" class="stretched-link swap-link"></a>
+                                    </aside>
+                                    <div class="col-lg-5 col-sm-12">
+                                        <div class="info-main p-4"> <a href="{% url 'home:detail_product' product.id %}" class=""> {{ product.short_description }} </a>
+                                            <ul class="list-unstyled mt-3">
+                                                <li><i class="las la-check mr-2 text-success"></i>Платформа - {{ product.platform.name }}  </li>
+                                                <li><i class="las la-check mr-2 text-success"></i>Тип товара - {{ product.subcategory.name }}  </li>
+                                                <li><i class="las la-check mr-2 text-success"></i>Продавец - <a href="{% url 'users:user_account' product.id %}">{{ product.user.username }}</a></li>
+                                                
+                                            </ul>
+                                        </div>  
+                                    </div>
+                                    <aside class="col-lg-3 col-sm-12">
+                                        <div class="info-aside text-center d-flex align-items-start flex-column p-4">
+                                            <div class="price-wrap"> <span class="price h4"> {{ product.price_for_1_piece }}₽ </span></div>
+                                            <p class="text-success"></p>
+                                            <br> <a href="{% url 'home:detail_product' product.id %}" class="btn btn-primary btn-block"> Посмотреть </a>
+                                            <div class="btn-group btn-block">
+                                                <a href="{% url 'home:basket_add' product.id %}" class="btn btn-white" title="Save to favorite"> <i class="lar la-heart"></i></a>
+                                            </div>
+                                        </div>
+                                    </aside>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

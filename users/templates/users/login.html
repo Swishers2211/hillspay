@@ -1,0 +1,64 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="account-pages mt-7 mb-5 ">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="text-center w-75 m-auto">
+                                    <p class="text-muted mb-4 mt-3">Авторизация</p>
+                                </div>
+                                <form action="{% url 'users:login' %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.username.id_for_label }} id"></label>
+                                        {{ form.username }}
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="{{ form.password.id_for_label }}"></label>
+                                        {{ form.password }}
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="checkbox-signin" checked="">
+                                            <label class="custom-control-label" for="checkbox-signin">Запомнить меня</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb-0 text-center">
+                                        <button class="btn btn-primary btn-block" type="submit"> Войти </button>
+                                    </div>
+                                </form>
+                                <div class="text-center">
+                                    <ul class="social-list list-inline mt-3 mb-0">
+                                        <li class="list-inline-item">
+                                            <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github-circle"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <p> <a href="pages-recoverpw.html" class="text-muted ml-1">Забыли пароль?</a></p>
+                                <p class="text-muted">Нет аккаунта? <a href="{% url 'users:register' %}" class="text-primary font-weight-medium ml-1">Зарегистрироваться</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

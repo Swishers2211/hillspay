@@ -1,0 +1,166 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main role="main">
+        <div class="wrapper">
+            <div class="breadcrumb-wrap">
+                <div class="container py-3">
+                    <div class="row d-flex justify-content-md-between justify-content-sm-center">
+                        <div class="col-md-4">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item mr-1 font-weight-bold"><a href="{% url 'home' %}">HillsPay</a></li>
+                                    <li class="breadcrumb-item ml-1 font-weight-bold active" aria-current="page">
+                                        {{ other_user_currency.user.username }}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <aside class="col-lg-3 pt-4 pt-lg-0">
+                        <div class="row">
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card mb-4">
+                                    <div class="card-body px-3 py-2">
+                                        <div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+                                            <img src="{% if user.image %} {{ user.image.url }} {% else %} {% static 'img/default_avatar.jpg' %} {% endif %}" class="img-lg rounded-circle" alt="profile image">
+                                            <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
+                                                <h6 class="mb-0">{{ other_user_currency.user.username }}</h6>
+                                                <p class="text-muted mb-1">Был в сети (час назад)</p>
+                                                <p class="mb-0 text-primary font-weight-bold small">Профиль продавца</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <ul class="nav flex-column dash-nav">
+                                <li class="nav-item">
+                                    {% if message_self.sender == request.user %}
+                                    {% else %}
+                                        <a class="nav-link active d-flex justify-content-between align-items-center" aria-current="page" href="{% url 'chat:dialog' message.username %}">
+                                            <div><i class="las la-arrow-right"></i>Написать</div>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                                <li class="nav-item">
+                                        <div><i class="las la-arrow-rights"></i>Дата регистрации {{ other_user_currency.user.published }}</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Отзывы</h4>
+                                        <p class="text-small">За все время</p>
+                                        <div class="d-flex justify-content-between align-items-baseline">
+                                            <h2 class="text-dark font-weight-bold">{{ reviews.count }}</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <li style="list-style-type: none;">Предложения</li>
+                        <br>
+                        {% for product in products %}
+                            <article class="card card-product-list">
+                                <div class="row no-gutters">
+                                    <aside class="col-sm-12 col-lg-4">
+                                        <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/520x400.png' %} {% endif %}" class="bg-image" alt="">
+                                        <a href="{% url 'home:detail_product' product.id %}" class="stretched-link swap-link"></a>
+                                    </aside>
+                                    <div class="col-lg-5 col-sm-12">
+                                        <div class="info-main p-4"> <a href="{% url 'home:detail_product' product.id %}" class=""> {{ product.short_description }} </a>
+                                            
+                                            <ul class="list-unstyled mt-3">
+                                                <li><i class="las la-check mr-2 text-success"></i>Платформа - {{ product.platform.name }}  </li>
+                                                <li><i class="las la-check mr-2 text-success"></i>Тип товара - {{ product.subcategory.name }}  </li>
+                                                <li><i class="las la-check mr-2 text-success"></i>Продавец - <a href="{% url 'users:user_account' product.user.id %}">{{ product.user.username }}</a></li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <!-- info-main.// -->
+                                    </div>
+                                    <!-- col.// -->
+                                    <aside class="col-lg-3 col-sm-12">
+                                        <div class="info-aside text-center d-flex align-items-start flex-column p-4">
+                                            <div class="price-wrap"> <span class="price h4"> {{ product.price_for_1_piece }}₽ </span></div>
+                                            <p class="text-success"></p>
+                                            <br> <a href="{% url 'home:detail_product' product.id %}" class="btn btn-primary btn-block"> Посмотреть </a>
+                                            <div class="btn-group btn-block">
+                                                <a href="{% url 'home:basket_add' product.id %}" class="btn btn-white" title="Save to favorite"> <i class="lar la-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- info-aside.// -->
+                                    </aside>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        {% for product_currency in products_currencies %}
+                            <article class="card card-product-list">
+                                <div class="row no-gutters">
+                                    <aside class="col-sm-12 col-lg-4">
+                                        <img src="{% if product_currency.image %} {{ product_currency.image.url }} {% else %} {% static 'img/520x400.png' %} {% endif %}" class="bg-image" alt="">
+                                        <a href="{% url 'home:detail_product_currency' product_currency.id %}" class="stretched-link swap-link"></a>
+                                    </aside>
+                                    <div class="col-lg-5 col-sm-12">
+                                        <div class="info-main p-4"> <a href="{% url 'home:detail_product_currency' product_currency.id %}" class="">Наличие {{ product_currency.availability }} {{ product_currency.currency.diversity }} </a>
+                                            
+                                            <ul class="list-unstyled mt-3">
+                                                <li><i class="las la-check mr-2 text-success"></i>Платформа - {{ product_currency.platform_currency.name }}  </li>
+                                                <li><i class="las la-check mr-2 text-success"></i>Продавец - <a href="{% url  'users:user_account_currency' product_currency.id %}">{{ product_currency.user.username }}</a></li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <!-- info-main.// -->
+                                    </div>
+                                    <!-- col.// -->
+                                    <aside class="col-lg-3 col-sm-12">
+                                        <div class="info-aside text-center d-flex align-items-start flex-column p-4">
+                                            <div class="price-wrap"> <span class="price h4"> {{ product_currency.price_for_1_piece }}₽/1{{ product_currency.currency.diversity }}</span></div>
+                                            <p class="text-success"></p>
+                                            <br> <a href="{% url 'home:detail_product_currency' product_currency.id %}" class="btn btn-primary btn-block"> Купить </a>
+                                        </div>
+                                        <!-- info-aside.// -->
+                                    </aside>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        <br>
+                        <li style="list-style-type: none;">Отзывы</li>
+                        <br>
+                        {% for review in reviews %}
+                            <article class="card card-product-list">
+                                <div class="row no-gutters">
+                                    </aside>
+                                    <div class="col-lg-5 col-sm-12">
+                                        <div class="info-main p-4"> <a href="" class="">  </a>
+                                            <li style="list-style-type: none;"></i>{{ review.published }}, {{ review.user }}, {{ review.game.name }}, {{ review.price_for_1_piece }}₽</li>
+                                            <li style="list-style-type: none;">{{ review.comment }}</li>
+                                            <li style="list-style-type: none;">Ответ продаца: <p>{{ review.saleman_comment }}<p></li>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="This is social network html5 template available in themeforest......" />
+		<meta name="keywords" content="Social Network, Social Media, Make Friends, Newsfeed, Profile Page" />
+		<meta name="robots" content="index, follow" />
+		<title>HillsPay - Биржа цифровых товаров</title>
+		<link rel="stylesheet" href="{% static 'chat/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/css/jquery.scrollbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/css/ionicons.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'chat/css/font-awesome.min.css' %}" />
+    <link href="{% static 'chat/css/emoji.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'chat/images/fav.png' %}"/>
+	</head>
+  <body>
+    {% block content %}
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
+    <script src="{% static 'chat/js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'chat/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat/js/jquery.sticky-kit.min.js' %}"></script>
+    <script src="{% static 'chat/js/jquery.scrollbar.min.js' %}"></script>
+    <script src="{% static 'chat/js/script.js' %}"></script>
+    <script src="{% static 'chat/js/global.js' %}"></script>
+  </body>
+</html>
